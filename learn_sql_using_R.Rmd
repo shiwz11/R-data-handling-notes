@@ -1,0 +1,13 @@
+---
+title: "SQL学习笔记"
+author:
+  - 石威展
+documentclass: ctexart
+output:
+  rticles::ctex:
+    fig_caption: yes
+    number_sections: yes
+    toc: yes
+classoption: "hyperref,"
+---
+
