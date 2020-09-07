@@ -1,0 +1,90 @@
+---
+title: "NOTES-数据处理方法及原理"
+author: "shiwz11"
+date: "2020/9/7"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# PCA
+
+降维的算法很多，如奇异值分解(SVD)、主成分分析(PCA)、因子分析(FA)、独立成分分析(ICA)
+
+Principal Component Analysis, 主成分分析法，要思想是将n维特征映射到k维上，这k维是全新的正交特征也被称为主成分，是在原有n维特征的基础上重新构造出来的k维特征。PCA的工作就是从原始的空间中顺序地找一组相互正交的坐标轴，新的坐标轴的选择与数据本身是密切相关的。其中，第一个新坐标轴选择是原始数据中方差最大的方向，第二个新坐标轴选取是与第一个坐标轴正交的平面中使得方差最大的，第三个轴是与第1,2个轴正交的平面中方差最大的。依次类推，可以得到n个这样的坐标轴。通过这种方式获得的新的坐标轴，我们发现，大部分方差都包含在前面k个坐标轴中，后面的坐标轴所含的方差几乎为0。于是，我们可以忽略余下的坐标轴，只保留前面k个含有绝大部分方差的坐标轴。事实上，这相当于只保留包含绝大部分方差的维度特征，而忽略包含方差几乎为0的特征维度，实现对数据特征的降维处理。
+
+**Q**：如何得到这些包含最大差异性的主成分方向呢？
+
+**A**：通过计算数据矩阵的协方差矩阵，然后得到协方差矩阵的特征值特征向量，选择特征值最大(即方差最大)的k个特征所对应的特征向量组成的矩阵。这样就可以将数据矩阵转换到新的空间当中，实现数据特征的降维。
+
+由于得到协方差矩阵的特征值特征向量有两种方法：特征值分解协方差矩阵、奇异值分解协方差矩阵，所以PCA算法有两种实现方法：基于特征值分解协方差矩阵实现PCA算法、基于SVD分解协方差矩阵实现PCA算法。
+
+# 机器学习中的SVD
+
+## 矩阵分解
+
+### 矩阵分解作用
+
+- 矩阵填充(通过矩阵分解来填充原有矩阵，例如协同过滤的ALS算法就是填充原有矩阵)
+
+- 清理异常值与离群点
+
+- 降维、压缩
+
+- 个性化推荐
+
+- 间接的特征组合(计算特征间相似度)
+
+### 矩阵分解的方法
+
+特征值分解。
+
+PCA(Principal Component Analysis)分解，作用：降维、压缩。
+
+SVD(Singular Value Decomposition)分解，也叫奇异值分解。
+
+LSI(Latent Semantic Indexing)或者叫LSA(Latent Semantic Analysis)，隐语义分析分解。
+
+PLSA(Probabilistic Latent Semantic Analysis)，概率潜在语义分析。PLSA和LDA都是主题模型，PLSA是判别式模型。
+
+NMF(Non-negative Matrix Factorization)，非负矩阵分解。非负矩阵分解能够广泛应用于图像分析、文本挖掘和语言处理等领域。
+
+LDA(Latent Dirichlet Allocation)模型，潜在狄利克雷分配模型。LDA是一种主题模型，将文档集中每篇文档的主题以概率的形式给出，可以用于主题聚类或者文本分类，是生成式模型。LDA作为主题模型可以应用到很多领域，比如：文本情感分析、文本分类、个性化推荐、社交网络、广告预测等方面。
+
+MF(Matrix Factorization)模型，矩阵分解模型。矩阵分解其实可以分为很多种：
+
+基本矩阵分解(Basic Matrix Factorization)，basic MF分解。
+
+正则化矩阵分解(Regularized Matrix Factorization)。
+
+概率矩阵分解(Probabilistic Matrix Factorization)，PMF。
+
+非负矩阵分解(Non-negative Matrix Factorization)，NMF。
+
+正交非负矩阵分解(Orthogonal Non-negative Matrix Factorization)。
+
+PMF(Probabilistic Matrix Factorization)，概率矩阵分解。
+
+SVD++
+
+### 几个重点掌握的矩阵分解算法
+
+1) 经典的PCA、SVD是机器学习入门必学算法。
+
+2)2003年提出的主题模型LDA
+
+3)概率矩阵分解(PMF)，主要应用到推荐系统中，在大规模的稀疏不平衡Netflix数据集上取得了较好的结果。
+
+4)非负矩阵分解，也很重要。非负矩阵分解及其改进版本应用到很多领域中。
+
+## SVD具体介绍
+
+### 特征值、特征向量、特征值分解
+
+# 参考文献
+
+[主成分分析原理](https://blog.csdn.net/program_developer/article/details/80632779)
+
+[机器学习中SVD总结](https://mp.weixin.qq.com/s/Dv51K8JETakIKe5dPBAPVg)
